@@ -3,10 +3,12 @@ import mongoose from 'mongoose';
 import { router as cardRouter } from './routes/cardRoutes';
 import { ingestData } from './services/dataService';
 import redis from './services/redisService';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/cardnexus')
+mongoose.connect(process.env.MONGODB_URI!)
   .then(() => {
     console.log('MongoDB connected');
     ingestData();

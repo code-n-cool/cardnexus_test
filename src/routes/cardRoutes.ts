@@ -1,4 +1,4 @@
-import { hash } from 'crypto'; 
+import { createHash } from 'crypto'; 
 import express from 'express';
 import { Card } from '../models/Card';
 import redis from '../services/redisService';
@@ -7,7 +7,7 @@ const router = express.Router();
 
 const generateCacheKey = (params: any) => {
   const queryString = JSON.stringify(params);
-  return hash('sha256', queryString, 'hex');
+  return createHash('sha256').update(queryString).digest('hex');
 };
 
 router.get('/cards', async (req, res) => {
